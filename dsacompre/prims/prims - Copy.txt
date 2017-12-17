@@ -1,0 +1,77 @@
+//http://www.geeksforgeeks.org/greedy-algorithms-set-5-prims-mst-for-adjacency-list-representation/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+int main ()
+{
+
+int v,e;
+cin>>v>>e;
+   vector < pair<int,int> > g[v+1];
+// vector < pair<int,int> >v[n];
+int i;
+for(i=1;i<=e;i++)
+{
+int x,y,w;
+cin >>x>>y>>w;
+g[x].push_back(make_pair(y,w));
+g[y].push_back(make_pair(x,w));
+}
+
+
+int key [v+1];
+int parent [v+1];
+bool visited[v+1];
+for(i=0;i<=v;i++)
+{
+key[i]=9999999;
+visited[i]=false;
+}
+
+
+key[1]=0;
+visited[1]=true;
+priority_queue< pair<int,int >,vector < pair<int,int> >,greater< pair<int,int> >  >pq;
+pq.push(make_pair(0,1));
+while( !pq.empty())
+    {
+      pair<int,int> t= pq.top();
+      pq.pop();
+      if(visited[t.second]==false)
+      {
+         visited[t.second]=true;
+         key[t.second]=t.first;
+      }
+    for(i=0;i<g[t.second].size();i++){
+        
+      
+        int l=g[t.second][i].first;
+        int r=g[t.second][i].second;
+         
+     if(visited[l]==false)
+     {
+         parent[l]=t.second;
+         pq.push(make_pair(r,l));
+     }
+        
+    }
+    
+    
+}
+
+for(i=2;i<=v;i++){
+    cout<< parent[i]<<" "<<i<<" "<<key[i]<<endl;
+    
+}
+
+return 0;
+
+}
+
+
+
+
+
+
+

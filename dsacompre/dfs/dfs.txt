@@ -1,0 +1,40 @@
+// C++ program to print DFS traversal from a given vertex in a  given graph
+#include<bits/stdc++.h>
+
+using namespace std;
+
+vector <int> g[10000000];
+bool visited[10000000];
+
+void dfs(int v)
+{
+   if(visited[v]!=true)
+   {
+       cout<<v<<" ";
+       visited[v]=true;
+       for(int i=0;i<g[v].size();i++){
+        if( !visited[g[v][i]] )
+        dfs(g[v][i]);
+       }
+   }
+   }
+
+int main()
+{
+int n,m;
+cin>>n>>m;
+int i;
+int l,r;
+for(i=0;i<=n;i++){
+    visited[i]=false;
+}
+for(i=1;i<=m;i++)
+{
+  cin>>l>>r;
+  g[l].push_back(r);
+ g[r].push_back(l);
+}
+dfs(2);
+
+}
+

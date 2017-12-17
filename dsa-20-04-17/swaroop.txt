@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    std::ios_base::sync_with_stdio(false);
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+        bool visited[n];
+        vector < pair<int,int> >v[n];
+        int dist[n];
+        for(int i=0;i<m;i++)
+        {
+            int x,y,w;
+            cin>>x>>y>>w;
+            x--; y--;
+            v[x].push_back(make_pair(y,w));
+            v[y].push_back(make_pair(x,w));
+        }   
+        for(int i=0;i<n;i++)
+        {
+            dist[i]=9999999;
+            visited[i]=0;
+        }    
+        int s;
+        cin>>s;
+        s--;
+        priority_queue<pair<int,int>, vector <pair<int,int> > , greater<pair<int,int> > > pq;
+        pq.push(make_pair(0,s));
+        dist[s]=0;
+        visited[s]=true;
+        while(!pq.empty())
+        {
+            pair<int,int> p1=pq.top();
+            pq.pop();
+            int x=p1.second;
+            for(int i=0;i<v[x].size();i++)
+            {
+                int u=v[x][i].first;
+                int w1=v[x][i].second;
+                if(visited[u]==false)
+                {
+                    dist[u]=dist[x]+w1;
+                    visited[u]=true;
+                    pq.push(make_pair(w1,u));
+                }
+                else
+                {
+                    if(dist[u] > dist[x]+w1)
+                    {
+                        dist[u]=dist[x]+w1;
+                        pq.push(make_pair(dist[u],u));
+                    }    
+                }    
+            }    
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(i!=s)
+            {
+                if(visited[i]==true)
+                    cout<<dist[i]<<" ";
+                else
+                    cout<<-1<<" ";
+            }    
+        }    
+        cout<<endl;
+    }
+    return 0;
+}
